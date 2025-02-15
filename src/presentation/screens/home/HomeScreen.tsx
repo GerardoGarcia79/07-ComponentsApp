@@ -1,8 +1,9 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {globalStyles} from '../../../config/theme/theme';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Title} from '../../components/ui/Title';
+import {MenuItem} from '../../components/ui/MenuItem';
 
 export const HomeScreen = () => {
   return (
@@ -11,17 +12,45 @@ export const HomeScreen = () => {
         <ScrollView>
           <Title text="Opciones del menú" safe />
 
-          {menuItems.map(item => (
-            <Text key={item.component}>{item.name}</Text>
+          {animationMenuItems.map((item, index) => (
+            <MenuItem
+              {...item}
+              key={item.component}
+              isFirst={index === 0}
+              isLast={index === animationMenuItems.length - 1}
+            />
           ))}
+
+          <View style={{marginTop: 30}}>
+            {menuItems.map((item, index) => (
+              <MenuItem
+                {...item}
+                key={item.component}
+                isFirst={index === 0}
+                isLast={index === menuItems.length - 1}
+              />
+            ))}
+          </View>
+
+          <View style={{marginTop: 30}}>
+            {uiMenuItems.map((item, index) => (
+              <MenuItem
+                {...item}
+                key={item.component}
+                isFirst={index === 0}
+                isLast={index === uiMenuItems.length - 1}
+              />
+            ))}
+          </View>
+
+          <View style={{marginTop: 30}} />
         </ScrollView>
       </View>
     </View>
   );
 };
 
-export const menuItems = [
-  // 01-animationMenuItems
+const animationMenuItems = [
   {
     name: 'Animation 101',
     icon: 'cube-outline',
@@ -32,8 +61,9 @@ export const menuItems = [
     icon: 'albums-outline',
     component: 'Animation102Screen',
   },
+];
 
-  // 02-menuItems
+export const menuItems = [
   {
     name: 'Pull to refresh',
     icon: 'refresh-outline',
@@ -64,8 +94,9 @@ export const menuItems = [
     icon: 'flask-outline',
     component: 'ChangeThemeScreen',
   },
+];
 
-  // 03- uiMenuItems
+const uiMenuItems = [
   {
     name: 'Switches',
     icon: 'toggle-outline',

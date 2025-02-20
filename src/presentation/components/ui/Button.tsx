@@ -7,8 +7,6 @@ interface Props {
   styles?: StyleProp<ViewStyle>;
   onPress: () => void;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Button = ({onPress, text, styles}: Props) => {
   return (
     <Pressable
@@ -18,6 +16,7 @@ export const Button = ({onPress, text, styles}: Props) => {
           opacity: pressed ? 0.8 : 1,
           backgroundColor: colors.primary,
         },
+        styles,
       ]}
       onPress={onPress}>
       <Text
@@ -27,7 +26,7 @@ export const Button = ({onPress, text, styles}: Props) => {
             color: colors.buttonTextColor,
           },
         ]}>
-        Button
+        {text}
       </Text>
     </Pressable>
   );

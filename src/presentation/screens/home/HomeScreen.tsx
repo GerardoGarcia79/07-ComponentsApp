@@ -22,23 +22,23 @@ export const HomeScreen = () => {
           ))}
 
           <View style={{marginTop: 30}}>
-            {menuItems.map((item, index) => (
-              <MenuItem
-                {...item}
-                key={item.component}
-                isFirst={index === 0}
-                isLast={index === menuItems.length - 1}
-              />
-            ))}
-          </View>
-
-          <View style={{marginTop: 30}}>
             {uiMenuItems.map((item, index) => (
               <MenuItem
                 {...item}
                 key={item.component}
                 isFirst={index === 0}
                 isLast={index === uiMenuItems.length - 1}
+              />
+            ))}
+          </View>
+
+          <View style={{marginTop: 30}}>
+            {menuItems.map((item, index) => (
+              <MenuItem
+                {...item}
+                key={item.component}
+                isFirst={index === 0}
+                isLast={index === menuItems.length - 1}
               />
             ))}
           </View>

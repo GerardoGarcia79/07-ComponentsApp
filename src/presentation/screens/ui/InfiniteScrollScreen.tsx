@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React, {useState} from 'react';
-import {ActivityIndicator, Image, View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {colors} from '../../../config/theme/theme';
+import {FadeInImage} from '../../components/ui/FadeInImage';
 
 export const InfiniteScrollScreen = () => {
   const [numbers, setNumbers] = useState([0, 1, 2, 3, 4, 5]);
@@ -43,8 +44,12 @@ interface ListItemProps {
 
 const ListItem = ({number}: ListItemProps) => {
   return (
-    <Image
-      source={{uri: `https://picsum.photos/id/${number}/500/400`}}
+    // <Image
+    //   source={{uri: `https://picsum.photos/id/${number}/500/400`}}
+    //   style={{height: 400, width: '100%'}}
+    // />
+    <FadeInImage
+      uri={`https://picsum.photos/id/${number}/500/400`}
       style={{height: 400, width: '100%'}}
     />
   );

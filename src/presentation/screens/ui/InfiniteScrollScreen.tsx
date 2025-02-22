@@ -1,8 +1,7 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, {useState} from 'react';
-import {CustomView} from '../../components/ui/CustomView';
-import {Title} from '../../components/ui/Title';
+import {ActivityIndicator, Image, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {Text} from 'react-native';
 import {colors} from '../../../config/theme/theme';
 
 export const InfiniteScrollScreen = () => {
@@ -22,25 +21,31 @@ export const InfiniteScrollScreen = () => {
   };
 
   return (
-    <CustomView margin>
-      <Title text="Infinite scroll" safe />
-
+    <View style={{backgroundColor: 'black'}}>
       <FlatList
         data={numbers}
         onEndReached={loadMore}
         onEndReachedThreshold={0.6}
-        renderItem={({item}) => (
-          <Text
-            style={{
-              height: 300,
-              backgroundColor: colors.primary,
-              color: 'white',
-              fontSize: 50,
-            }}>
-            {item}
-          </Text>
+        renderItem={({item}) => <ListItem number={item} />}
+        ListFooterComponent={() => (
+          <View style={{height: 150, justifyContent: 'center'}}>
+            <ActivityIndicator size={40} color={colors.primary} />
+          </View>
         )}
       />
-    </CustomView>
+    </View>
+  );
+};
+
+interface ListItemProps {
+  number: number;
+}
+
+const ListItem = ({number}: ListItemProps) => {
+  return (
+    <Image
+      source={{uri: `https://picsum.photos/id/${number}/500/400`}}
+      style={{height: 400, width: '100%'}}
+    />
   );
 };

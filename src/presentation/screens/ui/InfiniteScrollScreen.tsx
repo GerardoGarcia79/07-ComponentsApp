@@ -1,12 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import {colors} from '../../../config/theme/theme';
 import {FadeInImage} from '../../components/ui/FadeInImage';
+import {ThemeContext} from '../../context/ThemeContext';
 
 export const InfiniteScrollScreen = () => {
   const [numbers, setNumbers] = useState([0, 1, 2, 3, 4, 5]);
+  const {colors} = useContext(ThemeContext);
 
   const loadMore = () => {
     // Array.from creates a new array with a specified length (5 in this case).
@@ -22,7 +23,7 @@ export const InfiniteScrollScreen = () => {
   };
 
   return (
-    <View style={{backgroundColor: 'black'}}>
+    <View style={{backgroundColor: colors.background}}>
       <FlatList
         data={numbers}
         onEndReached={loadMore}

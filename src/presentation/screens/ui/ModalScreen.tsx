@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {CustomView} from '../../components/ui/CustomView';
 import {Title} from '../../components/ui/Title';
 import {Modal, Platform, View} from 'react-native';
 import {Button} from '../../components/ui/Button';
+import {ThemeContext} from '../../context/ThemeContext';
 
 export const ModalScreen = () => {
+  const {colors} = useContext(ThemeContext);
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -16,7 +18,7 @@ export const ModalScreen = () => {
         <View
           style={{
             flex: 1,
-            backgroundColor: 'rgba(0,0,0,0.1)',
+            backgroundColor: colors.background,
           }}>
           <View style={{paddingHorizontal: 10}}>
             <Title text="Modal content" safe />

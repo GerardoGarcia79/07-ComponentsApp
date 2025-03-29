@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Animated,
   Easing,
@@ -7,10 +7,13 @@ import {
   Text,
   View,
 } from 'react-native';
-import {colors} from '../../../config/theme/theme';
+// import {colors} from '../../../config/theme/theme';
 import {useAnimation} from '../../hooks/useAnimation';
+import {ThemeContext} from '../../context/ThemeContext';
 
 export const Animation101Screen = () => {
+  const {colors} = useContext(ThemeContext);
+
   const {
     animatedOpacity,
     animatedTop,
@@ -20,10 +23,11 @@ export const Animation101Screen = () => {
   } = useAnimation();
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container, backgroundColor: colors.background}}>
       <Animated.View
         style={{
           ...styles.purpleBox,
+          backgroundColor: colors.primary,
           opacity: animatedOpacity,
           transform: [{translateY: animatedTop}],
         }}
@@ -38,10 +42,10 @@ export const Animation101Screen = () => {
           });
         }}
         style={{marginTop: 10}}>
-        <Text>FadeIn</Text>
+        <Text style={{color: colors.text}}>FadeIn</Text>
       </Pressable>
       <Pressable onPress={() => fadeOut({})} style={{marginTop: 10}}>
-        <Text>FadeOut</Text>
+        <Text style={{color: colors.text}}>FadeOut</Text>
       </Pressable>
     </View>
   );
@@ -54,7 +58,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   purpleBox: {
-    backgroundColor: colors.primary,
     width: 150,
     height: 150,
   },

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {globalStyles} from '../../../config/theme/theme';
 import {CustomView} from '../../components/ui/CustomView';
 import {Title} from '../../components/ui/Title';
 import {Button} from '../../components/ui/Button';
 import {Alert, View} from 'react-native';
 import {Options, showPrompt} from '../../../config/adapters/prompt.adapter';
+import {ThemeContext} from '../../context/ThemeContext';
 
 export const AlertScreen = () => {
+  const {isDark} = useContext(ThemeContext);
+
   const createTwoButtonAlert = () =>
     Alert.alert(
       'Alert Title',
@@ -20,6 +23,7 @@ export const AlertScreen = () => {
         },
       ],
       {
+        userInterfaceStyle: isDark ? 'dark' : 'light',
         cancelable: true,
         onDismiss() {
           console.log('onDismiss');
@@ -28,18 +32,25 @@ export const AlertScreen = () => {
     );
 
   const createThreeButtonAlert = () =>
-    Alert.alert('Alert Title', 'My Alert Msg', [
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
+    Alert.alert(
+      'Alert Title',
+      'My Alert Msg',
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+        {
+          text: 'Ask me later',
+          onPress: () => console.log('Ask me later pressed'),
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ],
       {
-        text: 'Ask me later',
-        onPress: () => console.log('Ask me later pressed'),
+        userInterfaceStyle: isDark ? 'dark' : 'light',
       },
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-    ]);
+    );
 
   const onShowPrompt = () => {
     // Using my code - Prompt adapter

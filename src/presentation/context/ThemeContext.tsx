@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {createContext, PropsWithChildren} from 'react';
+import {darkColors, lightColors, ThemeColors} from '../../config/theme/theme';
+import {useColorScheme} from 'react-native';
 import {
-  darkColors,
-  desertSand,
-  lightColors,
-  ThemeColors,
-} from '../../config/theme/theme';
-import {Appearance, AppState, useColorScheme} from 'react-native';
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
 
 type ThemeColor = 'light' | 'dark' | 'desertSand';
 
@@ -22,6 +22,8 @@ export const ThemeContext = createContext({} as ThemeContextProps);
 export const ThemeProvider = ({children}: PropsWithChildren) => {
   const colorScheme = useColorScheme();
   const [currentTheme, setCurrentTheme] = useState<ThemeColor>('light');
+  const isDark = currentTheme === 'dark';
+  const colors = isDark ? darkColors : lightColors;
 
   useEffect(() => {
     if (colorScheme === 'dark') {
@@ -31,37 +33,34 @@ export const ThemeProvider = ({children}: PropsWithChildren) => {
     }
   }, [colorScheme]);
 
-  useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      console.log({nextAppState});
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      const colorScheme = Appearance.getColorScheme();
-      setCurrentTheme(colorScheme === 'dark' ? 'dark' : 'light');
-    });
+  // useEffect(() => {
+  //   const subscription = AppState.addEventListener('change', nextAppState => {
+  //     console.log({nextAppState});
+  //     // eslint-disable-next-line @typescript-eslint/no-shadow
+  //     const colorScheme = Appearance.getColorScheme();
+  //     setCurrentTheme(colorScheme === 'dark' ? 'dark' : 'light');
+  //   });
 
-    return () => {
-      subscription.remove();
-    };
-  }, []);
+  //   return () => {
+  //     subscription.remove();
+  //   };
+  // }, []);
 
   const setTheme = (theme: ThemeColor) => {
     setCurrentTheme(theme);
   };
 
   return (
-    <ThemeContext.Provider
-      value={{
-        currentTheme,
-        colors:
-          currentTheme === 'light'
-            ? lightColors
-            : currentTheme === 'dark'
-            ? darkColors
-            : desertSand,
-        isDark: currentTheme !== 'light' ? true : false,
-        setTheme,
-      }}>
-      {children}
-    </ThemeContext.Provider>
+    <NavigationContainer theme={isDark ? DarkTheme : DefaultTheme}>
+      <ThemeContext.Provider
+        value={{
+          currentTheme,
+          colors,
+          isDark,
+          setTheme,
+        }}>
+        {children}
+      </ThemeContext.Provider>
+    </NavigationContainer>
   );
 };

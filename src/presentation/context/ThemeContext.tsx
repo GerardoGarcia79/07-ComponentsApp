@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createContext, PropsWithChildren} from 'react';
 import {
   darkColors,
@@ -6,6 +6,7 @@ import {
   lightColors,
   ThemeColors,
 } from '../../config/theme/theme';
+import {useColorScheme} from 'react-native';
 
 type ThemeColor = 'light' | 'dark' | 'desertSand';
 
@@ -19,7 +20,16 @@ interface ThemeContextProps {
 export const ThemeContext = createContext({} as ThemeContextProps);
 
 export const ThemeProvider = ({children}: PropsWithChildren) => {
+  const colorScheme = useColorScheme();
   const [currentTheme, setCurrentTheme] = useState<ThemeColor>('light');
+
+  useEffect(() => {
+    if (colorScheme === 'dark') {
+      setCurrentTheme('dark');
+    } else {
+      setCurrentTheme('light');
+    }
+  }, [colorScheme]);
 
   const setTheme = (theme: ThemeColor) => {
     setCurrentTheme(theme);
